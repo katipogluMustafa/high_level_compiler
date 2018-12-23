@@ -168,14 +168,12 @@ bool fillSqaureBracketsArray(char* src){
 
 	char* squares = malloc( 2 * sizeof(char) );
 	int capacity = 2;
-
-	fillOpenSquareBrackets(src,squares, capacity);
-	
-	
-	fillClosingSquareBrackets(src, squares, capacity);
+	int squaresIndex = 0;
+	fillOpenSquareBrackets(src,squares, &capacity, &squaresIndex);
+	fillClosingSquareBrackets(src, squares, &capacity, &squaresIndex);
 }
 
-bool fillOpenSquareBrackets(char* src, char* squares, int capacity){
+bool fillOpenSquareBrackets(char* src, char* squares, int* capacity){
 
 	bool doubleTheArraySize(void*, size_t, size_t);
 	char* temp = src;
@@ -185,8 +183,9 @@ bool fillOpenSquareBrackets(char* src, char* squares, int capacity){
 
 		if( *temp == '[' ){
 
-			if( i == capacity){
-				doubleTheArraySize(squares, sizeof(char), capacity + 2 );
+			if( i == *capacity){
+				doubleTheArraySize(squares, sizeof(char), *capacity + 2 );
+				*capacity += 2;
 			}
 			
 			squares[i] = temp;
@@ -206,17 +205,16 @@ bool fillOpenSquareBrackets(char* src, char* squares, int capacity){
 	return TRUE;
 }
 
-char* fillClosingSquareBrackets(char* src, char* squares, int capacity){
+char* fillClosingSquareBrackets(char* src, char* squares, const int* const capacity){
 
 	bool doubleTheArraySize(void*, size_t, size_t);
-	char* temp = src;
+	char* temp = src + strlen(src) - 1;
 	int i = 0;
 	
 	while( *temp ){
 
-		if( *temp == '[' ){
+		if( *temp == ']' ){
 
-			
 			squares[i] = temp;
 			i += 2;
 
