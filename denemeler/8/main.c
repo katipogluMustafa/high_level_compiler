@@ -1,14 +1,8 @@
-#include<stdio.h>
-#include<ctype.h>
-#include<string.h>
-
-#define N 100
-#define BEGIN "{"
-#define END "}"
-#define BEGIN_PARAMETER "("
-#define END_PARAMETER ")"
+#include"def.h"
+#include"stack.h"
 
 int main(){
+	stackFactory(200);
 	FILE* in = fopen("in.txt","r");
 	FILE* out = fopen("out.txt","w+");
 	char buffer[N];

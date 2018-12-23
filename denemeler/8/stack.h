@@ -2,6 +2,8 @@
 #include<string.h>
 #include<stdlib.h>
 
+#ifndef BOOL
+
 #define BOOL bool
 
 typedef int BOOL;
@@ -10,7 +12,13 @@ typedef int BOOL;
 #define FALSE (0)
 #define false (0)
 
+#endif
+
+#ifndef N
+
 #define N 100
+
+#endif
 
 struct{
 
@@ -141,29 +149,3 @@ bool refactorTheStack(size_t max){
 
 	return ret;
 }
-
-
-int main(){
-
-	stackFactory(100);
-
-	stack.push(155);
-	stack.push(156);
-	stack.push(157);
-	stack.push(158);
-
-
-	printf("Stack Pointer: %lu\n",stack.sp);
-	
-	updateStack(200);
-
-	printf("Stack Pointer: %lu\n",stack.sp);
-	refactorTheStack(50);
-	printf("Stack Pointer: %lu\n",stack.sp);
-	
-
-	return 0;
-}
-
-
-
