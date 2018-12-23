@@ -20,37 +20,43 @@ struct{
 	size_t sp;
 
 	// Methods
-	void (*push)();
+	bool (*push)();
 	int (*pop)();
 
 }stack;
 
-void push(int item){
-
+bool push(int item){
+	int ret;
 	if(stack.sp == 0){
 		fprintf(stderr,"ERROR: Stack Overflow!, Can not insert new item.\n");
-		exit(0);
+		ret = FALSE;
+	}else{
+		
+		stack.sp--;
+		stack.data[stack.sp] = item;
+		ret = TRUE;
 	}
-	stack.sp--;
-	stack.data[stack.sp] = item;
 
+	return ret;
 }
 
 int pop(){
+	int ret;
 	
 	if(stack.sp == stack.max){
 		fprintf(stderr,"ERROR: Void Stack, Can not retrieve item.\n");
-		exit(0);
+		ret = -1;
+	}else{
+		ret = stack.data[stack.sp];
+		stack.sp++;
 	}
-	int ret = stack.data[stack.sp];
-	stack.sp++;
 
 	return ret;
 }
 
 bool stackFactory(size_t max){
 
-	void push(int);
+	bool push(int);
 	int pop();
 
 	stack.max = max;
@@ -78,43 +84,80 @@ bool updateStack(size_t max){
 	}
 
 	int i;
-	for(i = stack.max; i > stack.sp; i--){
-		max--;
-		newData[max] = stack.data[i];
+	for(i = stack.max-1; i != stack.sp - 1;i--){
+		newData[--newStackPointer] = stack.data[i];
 	}
+
+
+	free(stack.data);
 
 	stack.data = newData;
 	stack.sp = newStackPointer;
+	stack.max = max;
+
 
 	return TRUE;
 }
 
+bool clearStack(){
+	int ret = TRUE;
+	int i;
+	int n = stack.max - stack.sp;
+
+	for(i = 0; i < n; i++){
+		ret *= stack.pop();
+	}
+
+	if( ret < 0 ){
+		ret = FALSE;
+	}else{
+		ret = TRUE;
+	}
+
+	return ret;
+}
+
+bool setStack(int numberOfElements, int setToThis){
+	int ret = 1;
+	int i;
+	for(i = 0; i < numberOfElements; i++){
+		ret *= stack.push(setToThis);
+	}
+
+	if( ret > 0 ){
+		ret = TRUE;
+	}
+
+	return ret;
+}
+
+bool refactorTheStack(size_t max){
+	int ret = TRUE;
+
+	ret *= updateStack(max);
+	ret *= clearStack();
+
+	return ret;
+}
 
 
 int main(){
-	/*
-	void push(STACK* stack, int item);
-	int pop(STACK* stack);
 
-	STACK* stack;
-	stackFactory( stack, N, push, pop);
-*/
 	stackFactory(100);
+
 	stack.push(155);
 	stack.push(156);
 	stack.push(157);
 	stack.push(158);
 
+
+	printf("Stack Pointer: %lu\n",stack.sp);
+	
 	updateStack(200);
-	printf("%d\n",stack.pop());
 
-	printf("%d\n",stack.pop());
-
-	printf("%d\n",stack.pop());
-
-	printf("%d\n",stack.pop());
-
-
+	printf("Stack Pointer: %lu\n",stack.sp);
+	refactorTheStack(50);
+	printf("Stack Pointer: %lu\n",stack.sp);
 	
 
 	return 0;
