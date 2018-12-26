@@ -3,6 +3,10 @@
 #include<stdlib.h>
 #include<ctype.h>
 
+#include"stack.h"
+#include"linkedList.h"
+
+
 #define BEGIN "{"
 #define END "}"
 #define BEGIN_PARAMETER "("
