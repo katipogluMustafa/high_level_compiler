@@ -17,13 +17,14 @@ typedef int BOOL;
 
 /* Prototypes */
 /*
-	void genericPush(struct genericNode* head, void* val);
-	void genericList(struct genericNode* head, void(*genericPrintf)() );
-	struct genericNode* genericPushFront(struct genericNode* head, void* val);
-	bool genericDeleteNode(struct genericNode* head, void* val, bool(*genericEqualTo)() );
-	struct genericNode* genericSearchNode(struct genericNode* head, void* val, bool(*genericEqualTo)() );
-	struct genericNode* genericListFactory(void* val);
+	void genericPush(NODE* head, void* val);
+	void genericList(NODE* head, void(*genericPrintf)() );
+	NODE* genericPushFront(NODE* head, void* val);
+	bool genericDeleteNode(NODE* head, void* val, bool(*genericEqualTo)() );
+	NODE* genericSearchNode(NODE* head, void* val, bool(*genericEqualTo)() );
+	NODE* genericListFactory(void* val);
 */
+
 struct genericNode{
 	void* val;
 	struct genericNode* next;
@@ -31,8 +32,9 @@ struct genericNode{
 
 typedef struct genericNode NODE;
 
-struct genericNode* genericListFactory(void* val){
-	struct genericNode* listHead = (struct genericNode*)malloc( sizeof(struct genericNode) );
+
+NODE* genericListFactory(void* val){
+	NODE* listHead = (NODE*)malloc( sizeof(NODE) );
 	
 	listHead->val = (void*)val;
 	listHead->next = NULL;
@@ -40,21 +42,21 @@ struct genericNode* genericListFactory(void* val){
 	return listHead;
 }
 
-void genericPush(struct genericNode* head, void* val) {
-    struct genericNode* current = head;
+void genericPush(NODE* head, void* val) {
+    NODE* current = head;
 
     while (current->next != NULL) {
         current = current->next;
     }
 
-    current->next = malloc( sizeof(struct genericNode) ); 
+    current->next = malloc( sizeof(NODE) ); 
     current->next->val = val;					
     current->next->next = NULL;					
 }
 
-void genericList(struct genericNode* head, void(*genericPrintf)() ){
+void genericList(NODE* head, void(*genericPrintf)() ){
 
-	struct genericNode* current = head;
+	NODE* current = head;
 
     printf("liste elemanlari:\n");
 
@@ -68,10 +70,10 @@ void genericList(struct genericNode* head, void(*genericPrintf)() ){
     printf("\n");
 }
 
-struct genericNode* genericPushFront(struct genericNode* head, void* val) {
-    struct genericNode* newN;
+NODE* genericPushFront(NODE* head, void* val) {
+    NODE* newN;
 
-	newN = malloc( sizeof(struct genericNode) );
+	newN = malloc( sizeof(NODE) );
 
 	newN->next = head;
 	newN->val = val;
@@ -79,15 +81,15 @@ struct genericNode* genericPushFront(struct genericNode* head, void* val) {
     return newN;
 }
 
-bool genericDeleteNode(struct genericNode* head, void* val, bool(*genericEqualTo)() )
+bool genericDeleteNode(NODE* head, void* val, bool(*genericEqualTo)() )
 {	
-	bool genericDeleteFront(struct genericNode*, void*, bool(*)() );
+	bool genericDeleteFront(NODE*, void*, bool(*)() );
 
 	if( head->val == val){
 		return genericDeleteFront(head, val, genericEqualTo);
 	}
 
-	struct genericNode* current = head, *before = NULL;
+	NODE* current = head, *before = NULL;
     
 	while( !genericEqualTo( current->val, val) && (current->next != NULL) ){
 		before=current;
@@ -106,8 +108,8 @@ bool genericDeleteNode(struct genericNode* head, void* val, bool(*genericEqualTo
         
 }
 
-bool genericDeleteFront(struct genericNode* head, void* val, bool(*genericEqualTo)() ){
-	struct genericNode* dummy;
+bool genericDeleteFront(NODE* head, void* val, bool(*genericEqualTo)() ){
+	NODE* dummy;
 
 	if( genericEqualTo(val, head->val) ){
 
@@ -123,8 +125,8 @@ bool genericDeleteFront(struct genericNode* head, void* val, bool(*genericEqualT
 	return false;
 }
 
-struct genericNode* genericSearchNode(struct genericNode* head, void* val, bool(*genericEqualTo)() ){
-	struct genericNode* current = head;
+NODE* genericSearchNode(NODE* head, void* val, bool(*genericEqualTo)() ){
+	NODE* current = head;
 
 	while( !genericEqualTo(current->val, val) && (current->next != NULL) ){
 

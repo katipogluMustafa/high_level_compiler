@@ -21,29 +21,29 @@ void paramPrintf(param* x){
 }
 
 
-struct genericNode* paramListFactory(param* val){
+NODE* paramListFactory(param* val){
 	return genericListFactory(val);
 }
 
-void paramPush(struct genericNode* head, param* val) {
+void paramPush(NODE* head, param* val) {
 	genericPush(head, val);
 }
 
-void paramList(struct genericNode* head){
+void paramList(NODE* head){
 	void paramPrintf(param*);
 	genericList(head, paramPrintf);
 }
 
-struct genericNode* paramPushFront(struct genericNode* head, param* val){
+NODE* paramPushFront(NODE* head, param* val){
 	return paramPushFront(head, val);
 }
 
-bool paramDeleteNode(struct genericNode* head, param* val ){
+bool paramDeleteNode(NODE* head, param* val ){
 	bool paramEqualTo(param, param);
 	return genericDeleteNode(head, val, paramEqualTo);
 }
 
-struct genericNode* paramSearchNode(struct genericNode* head, param* val ){
+NODE* paramSearchNode(NODE* head, param* val ){
 	bool paramEqualTo(param, param);
 	return genericSearchNode( head, val, paramEqualTo);
 }

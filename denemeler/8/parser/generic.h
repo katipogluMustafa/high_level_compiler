@@ -4,8 +4,6 @@
 #include "param.h"
 #include "arr.h"
 
-
-
 struct Function{
 	char* retType;
 	char* funcName;

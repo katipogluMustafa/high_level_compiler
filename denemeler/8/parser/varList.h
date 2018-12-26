@@ -20,29 +20,29 @@ void varPrintf(var* x){
 	printf("name: %s\ttype: %s\tid:   %d\n", x->name, x->type, x->id);
 }
 
-struct genericNode* varListFactory(var* val){
+NODE* varListFactory(var* val){
 	return genericListFactory(val);
 }
 
-void varPush(struct genericNode* head, var* val) {
+void varPush(NODE* head, var* val) {
 	genericPush(head, (void*)val);
 }
 
-void varList(struct genericNode* head){
+void varList(NODE* head){
 	void varPrintf(var*);
 	genericList(head, varPrintf);
 }
 
-struct genericNode* varPushFront(struct genericNode* head, var* val){
+NODE* varPushFront(NODE* head, var* val){
 	return genericPushFront(head,(void*)val);
 }
 
-bool varDeleteNode(struct genericNode* head, var* val ){
+bool varDeleteNode(NODE* head, var* val ){
 	bool varEqualTo(var, var);
 	return genericDeleteNode(head, (void*)val, varEqualTo);
 }
 
-struct genericNode* varSearchNode(struct genericNode* head, var* val ){
+NODE* varSearchNode(NODE* head, var* val ){
 	bool varEqualTo(var, var);
 	return genericSearchNode( head, (void*)val, varEqualTo);
 }
