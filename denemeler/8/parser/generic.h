@@ -12,6 +12,8 @@ struct Function{
 	int id;
 };
 
+typedef struct Function FUNCTION;
+
 struct callFunc{
 	// argumanList is a varList
 	struct genericNode* argumanList;
