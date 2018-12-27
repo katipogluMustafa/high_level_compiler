@@ -5,17 +5,24 @@ typedef struct{
 	char* type;
 	int capacity;
 	int id;
+	var* indexPointer;
 	void* arr;
 }Arr;
 
 Arr* ArrayFactory(char* name, char* type, int capacity){
 	Arr* arr = (Arr)malloc( sizeof(Arr) );
-	arr.name = name;
-	arr.type = type;
-	arr.capacity = capacity;
-	arr.arr = genericArrayFactory(arr);
+	arr->name = name;
+	arr->type = type;
+	arr->capacity = capacity;
+	arr->arr = genericArrayFactory(arr);
+
+	arr.indexPointer = NULL;
 
 	return arr;
+}
+
+bool setArrIndex(Arr* array, var* var ){
+	array->indexPointer = var;
 }
 
 void* genericArrayFactory(Arr arr){
