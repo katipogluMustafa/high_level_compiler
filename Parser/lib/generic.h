@@ -7,8 +7,8 @@
 struct Function{
 	char* retType;
 	char* funcName;
-	struct genericNode* localVarList; 		// varList
-	struct genericNode* paramList; 			// paramList
+	NODE* localVarList; 		// varList
+	NODE* paramList; 			// paramList
 	int id;
 };
 
@@ -16,12 +16,12 @@ typedef struct Function FUNCTION;
 
 struct callFunc{
 	// argumanList is a varList
-	struct genericNode* argumanList;
+	NODE* argumanList;
 	int id;
 };
 
 struct Conditional{
-	struct genericNode* localVarList; 
+	NODE* localVarList; 
 	Condition* conditions;
 	int id;
 }
@@ -42,7 +42,7 @@ typedef struct callFunc GET_VAL;
 typedef struct Conditional ifThen;
 typedef struct Conditional whileDo; 
 typedef struct{
-	struct genericNode* localVarList;
+	NODE* localVarList;
 	var startVar;
 	var endVar;
 	int id;

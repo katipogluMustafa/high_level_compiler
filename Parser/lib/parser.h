@@ -38,5 +38,29 @@ FUNCTION* functionAnalizer(FILE* fp){
 }
 
 bool getFuncSpecs(FUNCTION* func, char[] buffer, char* ptrToPROC){
+	
+	/* Get Function Specs*/
 
+	char* retType = getFuncRetType();
+	char* funcName = getFuncName();
+	NODE* localVarList = getLocalVarList();
+	NODE* paramList = getParamList();
+	int id = getId();
+
+	/* Error Controls */
+
+	assert( retType != NULL );
+	assert( funcName != NULL );
+	assert( localVarList != NULL );
+	assert( paramList != NULL );
+
+	/* Fill the Function */
+
+	func->retType = retType;
+	func->funcName = funcName;
+	func->localVarList = localVarList;
+	func->paramList = paramList;
+	func->id = id;
+
+	return true;
 }

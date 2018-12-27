@@ -13,12 +13,12 @@
 
 /* Parser */
 
-#include"parser/parser.h"
-#include"parser/arr.h"
-#include"parser/generic.h"
-#include"parser/genericLinkedList.h"
-#include"parser/param.h"
-#include"parser/varList.h"
+#include"parser/lib/parser.h"
+#include"parser/lib/arr.h"
+#include"parser/lib/generic.h"
+#include"parser/lib/genericLinkedList.h"
+#include"parser/lib/param.h"
+#include"parser/lib/varList.h"
 
 /* Macros */
 
