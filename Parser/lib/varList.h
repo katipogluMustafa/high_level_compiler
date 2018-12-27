@@ -1,6 +1,3 @@
-#include "../def.h"
-#include "genericLinkedList.h"
-
 typedef struct variable{
 	char* name; 
 	char* type;  // type

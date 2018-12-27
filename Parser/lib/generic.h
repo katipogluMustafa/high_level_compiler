@@ -1,9 +1,3 @@
-#include "../def.h"
-#include "genericLinkedList.h"
-#include "varList.h"
-#include "param.h"
-#include "arr.h"
-
 struct Function{
 	char* retType;
 	char* funcName;
@@ -22,9 +16,9 @@ struct callFunc{
 
 struct Conditional{
 	NODE* localVarList; 
-	Condition* conditions;
+	struct Condition* conditions;
 	int id;
-}
+};
 
 struct Condition{
 	struct Condition* left;

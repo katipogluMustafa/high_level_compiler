@@ -1,5 +1,3 @@
-#include "../def.h"
-
 typedef struct{
 	char* name;
 	char* type;
@@ -7,65 +5,67 @@ typedef struct{
 	int id;
 	var* indexPointer;
 	void* arr;
-}Arr;
+}ARR;
 
-Arr* ArrayFactory(char* name, char* type, int capacity){
-	Arr* arr = (Arr)malloc( sizeof(Arr) );
+ARR* ArrayFactory(char* name, char* type, int capacity){
+	void* genericArrayFactory(ARR* arr);
+
+	ARR* arr = (ARR*)malloc( sizeof(ARR) );
 	arr->name = name;
 	arr->type = type;
 	arr->capacity = capacity;
-	arr->arr = genericArrayFactory(arr);
+	arr->arr = (void*)genericArrayFactory(arr);
 
-	arr.indexPointer = NULL;
+	arr->indexPointer = NULL;
 
 	return arr;
 }
 
-bool setArrIndex(Arr* array, var* var ){
+bool setArrIndex(ARR* array, var* var ){
 	array->indexPointer = var;
 }
 
-void* genericArrayFactory(Arr arr){
+void* genericArrayFactory(ARR* arr){
 
-	if( !strcmp(arr.type, "_file") ){
-		FILE* arr = (FILE*)malloc( arr.capacity * sizeof(FILE) );
-		return arr;
-	}else if( !strcmp(arr.type, "char*") ){
-		char** arr = (char**)malloc( arr.capacity * sizeof(char*) );
-		return arr;
-	} else if( !strcmp(arr.type, "float*") ){
-		float** arr = (float**)malloc( arr.capacity * sizeof(float*) );
-		return arr;
-	} else if( !strcmp(arr.type, "int*") ){
-		int** arr = (int**)malloc( arr.capacity * sizeof(int*) );
-		return arr;
-	} else if( !strcmp(arr.type, "long double*") ){
-		long double** arr = (long double**)malloc( arr.capacity * sizeof(long double*) );
-		return arr;
-	} else if( !strcmp(arr.type, "long*") ){
-		long** arr = (long**)malloc( arr.capacity * sizeof(long*) );
-		return arr;
-	} else if( !strcmp(arr.type, "double*") ){
-		double** arr = (double**)malloc( arr.capacity * sizeof(double*) );
-		return arr;
-	} else if( !strcmp(arr.type, "long double") ){
-		long double* arr = (long double*)malloc( arr.capacity * sizeof(long double) );
-		return arr;
-	} else if( !strcmp(arr.type, "char") ){
-		char* arr = (char*)malloc( arr.capacity * sizeof(char) );
-		return arr;
-	} else if( !strcmp(arr.type, "float") ){
-		float* arr = (float*)malloc( arr.capacity * sizeof(float) );
-		return arr;
-	} else if( !strcmp(arr.type, "int") ){
-		int* arr = (int*)malloc( arr.capacity * sizeof(int) );
-		return arr;
-	} else if( !strcmp(arr.type, "long") ){
-		long* arr = (long*)malloc( arr.capacity * sizeof(long) );
-		return arr;
-	} else if( !strcmp(arr.type, "double") ){
-		double* arr = (double*)malloc( arr.capacity * sizeof(double) );
-		return arr;
+	if( !strcmp(arr->type, "_file") ){
+		FILE* array = (FILE*)malloc( arr->capacity * sizeof(FILE) );
+		return array;
+	}else if( !strcmp(arr->type, "char*") ){
+		char** array = (char**)malloc( arr->capacity * sizeof(char*) );
+		return array;
+	} else if( !strcmp(arr->type, "float*") ){
+		float** array = (float**)malloc( arr->capacity * sizeof(float*) );
+		return array;
+	} else if( !strcmp(arr->type, "int*") ){
+		int** array = (int**)malloc( arr->capacity * sizeof(int*) );
+		return array;
+	} else if( !strcmp(arr->type, "long double*") ){
+		long double** array = (long double**)malloc( arr->capacity * sizeof(long double*) );
+		return array;
+	} else if( !strcmp(arr->type, "long*") ){
+		long** array = (long**)malloc( arr->capacity * sizeof(long*) );
+		return array;
+	} else if( !strcmp(arr->type, "double*") ){
+		double** array = (double**)malloc( arr->capacity * sizeof(double*) );
+		return array;
+	} else if( !strcmp(arr->type, "long double") ){
+		long double* array = (long double*)malloc( arr->capacity * sizeof(long double) );
+		return array;
+	} else if( !strcmp(arr->type, "char") ){
+		char* array = (char*)malloc( arr->capacity * sizeof(char) );
+		return array;
+	} else if( !strcmp(arr->type, "float") ){
+		float* array = (float*)malloc( arr->capacity * sizeof(float) );
+		return array;
+	} else if( !strcmp(arr->type, "int") ){
+		int* array = (int*)malloc( arr->capacity * sizeof(int) );
+		return array;
+	} else if( !strcmp(arr->type, "long") ){
+		long* array = (long*)malloc( arr->capacity * sizeof(long) );
+		return array;
+	} else if( !strcmp(arr->type, "double") ){
+		double* array = (double*)malloc( arr->capacity * sizeof(double) );
+		return array;
 	} 
 
 }

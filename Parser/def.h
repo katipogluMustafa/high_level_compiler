@@ -6,20 +6,18 @@
 #include<ctype.h>
 #include<assert.h>
 
-/* Data Types */
+/* Data Structures */
 
-#include"stack.h"
-#include"linkedList.h"
+#include"../lib/stack.h"
 
 /* Parser */
 
-#include"parser/lib/parser.h"
-#include"parser/lib/arr.h"
-#include"parser/lib/generic.h"
-#include"parser/lib/genericLinkedList.h"
-#include"parser/lib/param.h"
-#include"parser/lib/varList.h"
 
+#include"lib/genericLinkedList.h"
+#include"lib/varList.h"
+#include"lib/arr.h"
+#include"lib/generic.h"
+#include"lib/param.h"
 /* Macros */
 
 #define BEGIN "{"

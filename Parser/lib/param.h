@@ -1,3 +1,5 @@
+
+
 typedef struct{
 	char* type;
 	char* name;
@@ -5,9 +7,9 @@ typedef struct{
 
 bool paramEqualTo(param x, param y){
 
-	if( !strcmp(param.name, param.name) 
+	if( !strcmp(x.name, y.name) 
 					&& 
-		!strcmp(param.type, param.type)  
+		!strcmp(x.type, y.type)  
 	  ) {
 
 		return true;
