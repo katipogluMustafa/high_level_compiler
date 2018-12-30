@@ -3,6 +3,9 @@
 char* getArgumans(char* buffer);
 bool removeString(char* src, char* str);
 char* clearString(char* in);
+char* findType(char* srcStr);
+void removeTheChar(char* src, char c);
+char* getPrintIdentifier(char* in);
 
 int main(){
 	FILE* in = fopen("in.txt", "r");
@@ -33,7 +36,7 @@ int main(){
 
 			if( ( varies = strstr(buffer, "$") )  != NULL ){
 
-				fprintf(out, "%s %s", clearString(buffer) ,getArgumans(buffer) );
+				fprintf(out, "%s, %s", clearString(buffer), getArgumans(buffer) );
 			}else{			
 				fprintf(out, "%s", buffer );				
 			}
@@ -51,15 +54,73 @@ int main(){
 }
 
 char* clearString(char* in){
-	char* buffer = malloc( sizeof(char) * ( strlen(buffer) + 1 ) );
+	char* buffer = (char*)malloc( sizeof(char) * ( strlen(in) + 1 ) );
 	strcpy(buffer, in);
+	char* out;
+	char* ptr;
+	char* type;
+	char* identifier
+	if( ( ptr = strstr(buffer, "$") ) != NULL ){
+		removeBefore(buffer, "_");
+		buffer++;
+		removeAfterwards(buffer,"_");
+		buffer--;
+		type = findType(buffer);
+		identifier = getPrintIdentifier(type);
+
+	}
+
+	free(type);
+	return buffer;
+}
+
+char* getPrintIdentifier(char* in){
+	void error(char*);
+	char* identifier;
+	char* src = malloc( ( strlen(in) + 1) * sizeof(char) );
+	strcpy(src, in);
+
+	if( strlen(src) == 0){
+		identifier = (char*)malloc( 5 * sizeof(char) );
+		strcpy(identifier, "");
+	}else if( removeString(src, "_cp") ){
+		identifier = (char*)malloc( 6 * sizeof(char) );
+		strcpy(identifier, "%s");
+
+	}else if( removeString(src, "_ld") ){
+		identifier = (char*)malloc( 12 * sizeof(char) );
+		strcpy(identifier, "%lf");
 	
-
-
+	}else if( removeString(src, "_c") ){
+		identifier = (char*)malloc( 5 * sizeof(char) );
+		strcpy(identifier, "%c");
+	
+	}else if( removeString(src, "_f") ){
+		identifier = (char*)malloc( 6 * sizeof(char) );
+		strcpy(identifier, "%f");
+	
+	}else if( removeString(src, "_i") ){
+		identifier = (char*)malloc( 4 * sizeof(char) );
+		strcpy(identifier,"%d");
+	
+	}else if( removeString(src, "_l") ){
+		identifier = (char*)malloc( 5 * sizeof(char) );
+		strcpy(identifier,"%l");
+	
+	}else if( removeString(src, "_d") ){
+		identifier = (char*)malloc( 7 * sizeof(char) );
+		strcpy(identifier,"%lf");
+	
+	}else{
+		printf("%s", src);
+		error("unknown arguman type!");
+	}
+	free(src);
+	return identifier;
 }
 
 char* getArgumans(char* in){
-	char* buffer = malloc( sizeof(char) * ( strlen(buffer) + 1 ) );
+	char* buffer = malloc( sizeof(char) * ( strlen(in) + 1 ) );
 	strcpy(buffer, in);
 	char* output;
 	int sizeOfOutput = 0;
@@ -91,3 +152,73 @@ char* getArgumans(char* in){
 	free(temp);
 	return output;
 }
+
+
+char* findType(char* srcStr){
+	void error(char*);
+	char* type;
+	char* src = malloc( ( strlen(srcStr) + 1) * sizeof(char) );
+	strcpy(src, srcStr);
+
+	if( strlen(src) == 0){
+		type = (char*)malloc( 5 * sizeof(char) );
+		strcpy(type, "void");
+	}else if( removeString(src, "_file") ){
+		type = (char*)malloc( 6 * sizeof(char) );
+		strcpy(type,"FILE*");
+
+	}else if( removeString(src, "_cp") ){
+		type = (char*)malloc( 6 * sizeof(char) );
+		strcpy(type,"char*");
+
+	}else if( removeString(src, "_fp") ){
+		type = (char*)malloc( 7 * sizeof(char) );
+		strcpy(type,"float*");
+
+	}else if( removeString(src, "_ip") ){
+		type = (char*)malloc( 5 * sizeof(char) );
+		strcpy(type,"int*");
+
+	}else if( removeString(src, "_ldp") ){
+		type = (char*)malloc( 13 * sizeof(char) );
+		strcpy(type,"long double*");
+		
+	}else if( removeString(src, "_lp") ){
+		type = (char*)malloc( 6 * sizeof(char) );
+		strcpy(type,"long*");
+
+	}else if( removeString(src, "_dp") ){
+		type = (char*)malloc( 8 * sizeof(char) );
+		strcpy(type,"double*");
+
+	}else if( removeString(src, "_ld") ){
+		type = (char*)malloc( 12 * sizeof(char) );
+		strcpy(type,"long double");
+	
+	}else if( removeString(src, "_c") ){
+		type = (char*)malloc( 5 * sizeof(char) );
+		strcpy(type,"char");
+	
+	}else if( removeString(src, "_f") ){
+		type = (char*)malloc( 6 * sizeof(char) );
+		strcpy(type,"float");
+	
+	}else if( removeString(src, "_i") ){
+		type = (char*)malloc( 4 * sizeof(char) );
+		strcpy(type,"int");
+	
+	}else if( removeString(src, "_l") ){
+		type = (char*)malloc( 5 * sizeof(char) );
+		strcpy(type,"long");
+	
+	}else if( removeString(src, "_d") ){
+		type = (char*)malloc( 7 * sizeof(char) );
+		strcpy(type,"double");
+	
+	}else{
+		printf("%s", src);
+		error("unknown return type!");
+	}
+	free(src);
+	return type;
+}	

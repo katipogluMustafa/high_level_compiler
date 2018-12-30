@@ -50,7 +50,6 @@ void removeTheChar(char* src, char c){
 	while( *temp ){
 
 		if(*temp == c){
-			strcpy(temp, temp + 1 );
 			removeChar(src, temp-src);
 		}
 		break;

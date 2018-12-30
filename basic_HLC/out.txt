@@ -1,12 +1,11 @@
 #include"stdio.h"
 
-
 void main(){
 	printf(“Dizinin eleman sayisini giriniz” )
 	printf(“Dizinin elemanlarini giriniz” )
 }
 }
 }
-	printf(max,maxind)
+	printf(“Dizinin en buyuk elemani $max_i, $maxind_i. indiste bulunmaktadir.” , max,maxind)
 }
 }
