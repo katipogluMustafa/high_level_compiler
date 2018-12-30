@@ -46,10 +46,10 @@ size_t getStackMax(){
 bool isStackInitialized(){
 
 	if( stack.data == NULL){
-		return true;
+		return false;
 	}
 
-	return false;
+	return true;
 }
 
 bool push(int item){

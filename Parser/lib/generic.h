@@ -1,4 +1,7 @@
 struct Function{
+	size_t startOffset;
+	size_t endOffset;
+	
 	char* retType;
 	char* funcName;
 	NODE* localVarList; 		// varList

@@ -1,60 +1,24 @@
-
-// returns an array of functions
-FUNCTION* functionAnalizer(FILE* fp){
-	bool getFuncSpecs(FUNCTION*, char[], char*);
-	size_t linePosition;
-	int curr_position = ftell(fp);
-	fseek(fp, 0, SEEK_SET);
-
-	char buffer[N];
-	char* ptr;
-
-	FUNCTION* funcs = (FUNCTION*)malloc( sizeof(FUNCTION) );
-	int funcsCapacity = 1;
-	int funcsIndex = 0;
-	
-	while(!feof(fp)){
-		linePosition = ftell();
-		fgets(buffer, N, fp);
-		assert( buffer );
-		if( (ptr = strstr(buffer, "PROCEDURE")) != NULL ){
-
-			if(funcsCapacity == funcsIndex){
-				funcs = (FUNCTION*)realloc(funcs, funcsCapacity + 1);
-				assert( funcs );
-				funcsCapacity++;
-			}
-
-			assert( getFuncSpecs(fp, &funcs[funcsIndex], buffer, linePosition) );
-	
-			funcsIndex += 1;
-		}		
+#include"def.h"
 
 
-	}
+char* getFuncRetType(FILE* fp, size_t start, size_t end){
+	char* getReturnLine(FILE*, size_t, size_t);
+	char* findType(char* src);
 
-	fseek(fp, curr_position, SEEK_SET);
+	size_t curr = ftell(fp);
+	fseek(fp,start,SEEK_SET);
+	char* type;
+	char* line = getReturnLine(fp, start, end);
+
+
+	removeString(line, "RETURN");
+	removeChars(line, ' ');
+	type = findType(line);
+
+	free(line);
+	fseek(fp, curr, SEEK_SET);
+	return type;
 }
-
-
-char* getFuncName(char* buffer){
-
-	char* tempBuffer = malloc( strlen(buffer) * sizeof(char) );
-	strcpy(tempBuffer, buffer);
-
-	removeAfterwards(tempBuffer, "(");
-	removeString(tempBuffer, "PROCEDURE");
-	removeChars(tempBuffer, ' ');
-
-	char* funcName = malloc( ( strlen(buffer) + 1)  * sizeof(char) );
-	strcpy(funcName, tempBuffer);
-
-	free(tempBuffer);
-
-	return funcName;
-}
-
-
 
 size_t getEndOffset(FILE* fp, size_t startOffset){
 	size_t getLineOfTheEndOFunc(FILE*, size_t);
@@ -108,22 +72,6 @@ size_t getLineOfTheEndOFunc(FILE* fp, size_t start){
 
 	fseek(fp, curr_position, SEEK_SET);
 	return positionOfEnd;
-}
-
-char* getFuncRetType(FILE* fp, size_t start, size_t end){
-	size_t curr = ftell(fp);
-	fseek(fp,start,SEEK_SET);
-	char* type;
-	char* line = getReturnLine(fp, start, end);
-
-
-	removeString(line, "RETURN");
-	removeChars(line, ' ');
-	type = findType(line);
-
-	free(line);
-	fseek(fp, curr, SEEK_SET);
-	return type;
 }
 
 char* getReturnLine(FILE* fp, size_t start, size_t end){
@@ -213,32 +161,31 @@ char* findType(char* src){
 }	
 
 
-bool getFuncSpecs(FILE* fp, FUNCTION* func, char[] buffer, size_t startOffset){
+int main(){
+	if( !stackFactory(200) ){
+		error("Unsuccessful Starting of Stack");
+	}
+	FILE* in = fopen("Files/in.txt","r");
+	FILE* out = fopen("Files/out.txt","w+");
+	char buffer[N];
+	int i = 0;
+	char tmp;
+	int curr_position;
+
+//	fgets(buffer,N,in);
+//	printf("%s", getFuncName(buffer) );	
+
+	size_t x = ftell(in);
+	size_t pos = getEndOffset(in, x);
+	fseek(in, pos, SEEK_SET);
+
+	fgets(buffer, N-1, in);
+	printf("pos: %lu, string:  %s", pos, buffer);
+
+	char* type = getFuncRetType(in, x, pos);
+
+	printf("type: %s", type);
 	
-	/* Get Function Specs*/
-	char* funcName = getFuncName(buffer); 						// done
-	size_t endOffset = getEndOffset(fp, startOffset); 			// done
-	char* retType = getFuncRetType(fp, startOffset, endOffset); // done
-	NODE* localVarList = getLocalVarList();
-	NODE* paramList = getParamList();
-	int id = getId();
-
-	/* Error Controls */
-
-	assert( retType != NULL );
-	assert( funcName != NULL );
-	assert( localVarList != NULL );
-	assert( paramList != NULL );
-
-	/* Fill the Function */
-
-	func->startOffset = startOffset;
-	func->endOffset = endOffset;
-	func->retType = retType;
-	func->funcName = funcName;
-	func->localVarList = localVarList;
-	func->paramList = paramList;
-	func->id = id;
-
-	return true;
+	
+	return 0;
 }
