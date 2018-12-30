@@ -197,18 +197,19 @@ NODE* getParamLinkedList(char* buffer){
 
 NODE* getLocalVarList(FILE* fp, size_t start, size_t end){
 	void error(char*);
-
+	int i;
+	char* p;
 	var* listHead, tempList;
 	size_t curr = ftell(fp);
 	fseek(fp, start, SEEK_SET);
-	size_t curr_sp, tempPos;
+	size_t sp, curr_sp, tempPos;
 	char* Buffer[N];
 
 	if(!isStackInitialized){
 		error("Uninitialized Stack!!");
-	}else{
-		curr_sp = getStackSP();
 	}
+
+	sp = getStackSP() + 1; 		// add first BEGIN's place
 
 	while( !feof(fp) ){
 		tempPos = ftell(fp);
@@ -217,15 +218,35 @@ NODE* getLocalVarList(FILE* fp, size_t start, size_t end){
 		}
 		fgets(buffer, N-1, fp);
 
-		if( strstr(buffer, "_"),  ){
-			
+		if( ( p = strstr(tempBuffer, "BEGIN") ) != NULL )
+			push(1);
+		else if( ( p = strstr(tempBuffer, "END") ) != NULL )
+			pop();
+		
+		if( ( curr_sp = getStackSP() ) == sp ){
+			if( strstr(buffer, "_"),  ){
+				tempList = extractVars(buffer);
+				i = 0;
+				while( tempList[i] != NULL){
+					if( !isVarAddedBefore(head, tempList[i]) )
+						varPush(head, tempList[i]);
+				}
+			}
 		}
+
 	}
 
 	fseek(fp, curr, SEEK_SET);
 	return listHead;
 }
 
+
+/* 
+ * Takes a buffer and returns a list of variables which is found inside buffer
+ */
+NODE* extractVars(char* buffer){
+	/* Complete This*/
+}
 
 
 
