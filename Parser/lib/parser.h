@@ -73,6 +73,7 @@ size_t getEndOffset(FILE* fp, size_t startOffset){
 }
 
 size_t getLineOfTheEndOFunc(FILE* fp, size_t start){
+	void error(char*);
 	size_t curr_position = ftell(fp);
 	size_t sp, curr_sp, tempPosition, positionOfEnd;
 
@@ -114,7 +115,7 @@ size_t getLineOfTheEndOFunc(FILE* fp, size_t start){
 
 char* getFuncRetType(FILE* fp, size_t start, size_t end){
 	char* getReturnLine(FILE*, size_t, size_t);
-	
+
 	size_t curr = ftell(fp);
 	fseek(fp,start,SEEK_SET);
 	char* type;
@@ -177,6 +178,7 @@ NODE* getParamList(FILE* fp, size_t start){
 NODE* getParamLinkedList(char* buffer){
 	char** getParamNameList(char*); // splits params into a list
 	param* getParam(char*);
+
 	int i;
 	NODE* headOfParams;
 
@@ -193,11 +195,46 @@ NODE* getParamLinkedList(char* buffer){
 	return headOfParams;
 }
 
+NODE* getLocalVarList(FILE* fp, size_t start, size_t end){
+	void error(char*);
+
+	var* listHead, tempList;
+	size_t curr = ftell(fp);
+	fseek(fp, start, SEEK_SET);
+	size_t curr_sp, tempPos;
+	char* Buffer[N];
+
+	if(!isStackInitialized){
+		error("Uninitialized Stack!!");
+	}else{
+		curr_sp = getStackSP();
+	}
+
+	while( !feof(fp) ){
+		tempPos = ftell(fp);
+		if( tempPos > end ){
+			break;
+		}
+		fgets(buffer, N-1, fp);
+
+		if( strstr(buffer, "_"),  ){
+			
+		}
+	}
+
+	fseek(fp, curr, SEEK_SET);
+	return listHead;
+}
+
+
+
+
 
 bool getFuncSpecs(FILE* fp, FUNCTION* func, char* buffer, size_t startOffset){
 	char* getFuncName(char*);
 	size_t getEndOffset(FILE*, size_t);
 	char* getFuncRetType(FILE*, size_t, size_t);
+	NODE* getLocalVarList(FILE*, size_t, size_t);
 	NODE* getParamList(FILE*, size_t);
 	int getId();
 	
@@ -206,7 +243,7 @@ bool getFuncSpecs(FILE* fp, FUNCTION* func, char* buffer, size_t startOffset){
 	char* funcName = getFuncName(buffer); 						// done
 	size_t endOffset = getEndOffset(fp, startOffset); 			// done
 	char* retType = getFuncRetType(fp, startOffset, endOffset); // done
-//	NODE* localVarList = getLocalVarList(); 					
+	NODE* localVarList = getLocalVarList(fp, startOffset, endOffset); 					
 	NODE* paramList = getParamList(fp, startOffset); 			// done, test it
 	int id = getId();
 
@@ -214,7 +251,7 @@ bool getFuncSpecs(FILE* fp, FUNCTION* func, char* buffer, size_t startOffset){
 
 	assert( retType != NULL );
 	assert( funcName != NULL );
-//	assert( localVarList != NULL );
+	assert( localVarList != NULL );
 	assert( paramList != NULL );
 
 	/* Fill the Function */
@@ -223,7 +260,7 @@ bool getFuncSpecs(FILE* fp, FUNCTION* func, char* buffer, size_t startOffset){
 	func->endOffset = endOffset;
 	func->retType = retType;
 	func->funcName = funcName;
-//	func->localVarList = localVarList;
+	func->localVarList = localVarList;
 	func->paramList = paramList;
 	func->id = id;
 

@@ -98,13 +98,12 @@ bool genericDeleteNode(NODE* head, void* val, bool(*genericEqualTo)() )
     if (current->next == NULL){
     	printf("silinmek istenen eleman listede yok\n");
     	return false;   	
-    }else
-    {
-    	before->next = current->next;
-    	free (current);
-    	return true;
-	}
-        
+    }
+    
+    before->next = current->next;
+    free(current);
+  
+  return true;      
 }
 
 bool genericDeleteFront(NODE* head, void* val, bool(*genericEqualTo)() ){

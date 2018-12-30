@@ -118,6 +118,7 @@ char* findType(char* srcStr){
 		strcpy(type,"double");
 	
 	}else{
+		printf("%s", src);
 		error("unknown return type!");
 	}
 	free(src);

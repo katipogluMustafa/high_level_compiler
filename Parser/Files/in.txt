@@ -24,7 +24,6 @@ BEGIN
 	END 
 
 	PRINT_LINE “Dizinin en buyuk elemani $max_i, $maxind_i. indiste bulunmaktadir.” 
-
 END
 
 PROCEDURE MAIN() 

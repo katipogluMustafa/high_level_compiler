@@ -4,6 +4,18 @@ typedef struct variable{
 	int id; 		// id in variables table;
 }var;
 
+
+bool isVarAddedBefore(var* head, var* item){
+	
+	var* found = varSearchNode(head, item);
+
+	if( found == NULL){
+		return false;
+	}
+
+	return true;
+}
+
 bool varEqualTo(var x, var y){
 
 	if( !strcmp(x.name, y.name)  ){
