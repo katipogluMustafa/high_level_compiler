@@ -1,4 +1,4 @@
-PROCEDURE MAIN() 
+PROCEDURE MAIN(x_i,y_i,f_file) 
 BEGIN 
 	
 	PRINT_LINE “Dizinin eleman sayisini giriniz” 

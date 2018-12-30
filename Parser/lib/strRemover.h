@@ -115,3 +115,15 @@ bool removeAfterwards(char* src, char* str){
 
 	return false;
 }
+
+bool removeBefore(char* src, char* str){
+	char* ptr;
+
+	if ( ( ptr = strstr(src,str) ) != NULL ){
+		strcpy(src, ptr + strlen(str) );
+
+		return true;
+	}
+
+	return false;
+}

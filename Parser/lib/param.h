@@ -1,8 +1,7 @@
-
-
 typedef struct{
 	char* type;
 	char* name;
+	int id;
 }param;
 
 bool paramEqualTo(param x, param y){

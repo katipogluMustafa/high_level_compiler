@@ -1,7 +1,8 @@
 
 // returns an array of functions
 FUNCTION* functionAnalizer(FILE* fp){
-	bool getFuncSpecs(FUNCTION*, char[], char*);
+	bool getFuncSpecs(FILE* fp, FUNCTION* func, char* buffer, size_t startOffset);
+
 	size_t linePosition;
 	int curr_position = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
@@ -14,9 +15,10 @@ FUNCTION* functionAnalizer(FILE* fp){
 	int funcsIndex = 0;
 	
 	while(!feof(fp)){
-		linePosition = ftell();
-		fgets(buffer, N, fp);
+		linePosition = ftell(fp);
+		fgets(buffer, N-1, fp);
 		assert( buffer );
+
 		if( (ptr = strstr(buffer, "PROCEDURE")) != NULL ){
 
 			if(funcsCapacity == funcsIndex){
@@ -111,6 +113,8 @@ size_t getLineOfTheEndOFunc(FILE* fp, size_t start){
 }
 
 char* getFuncRetType(FILE* fp, size_t start, size_t end){
+	char* getReturnLine(FILE*, size_t, size_t);
+	
 	size_t curr = ftell(fp);
 	fseek(fp,start,SEEK_SET);
 	char* type;
@@ -147,87 +151,70 @@ char* getReturnLine(FILE* fp, size_t start, size_t end){
 	return line;
 }
 
-char* findType(char* src){
-	char* type;
 
-	if( strlen(src) == 0){
-		type = (char*)malloc( 5 * sizeof(char) );
-		strcpy(type, "void");
-	}else if( removeString(src, "_file") ){
-		type = (char*)malloc( 6 * sizeof(char) );
-		strcpy(type,"FILE*");
+NODE* getParamList(FILE* fp, size_t start){
+	NODE* getParamLinkedList(char*);
+	bool removeAfterwards(char*, char*);
+	bool removeBefore(char*, char*);
+	void removeChars(char*, char);
 
-	}else if( removeString(src, "_cp") ){
-		type = (char*)malloc( 6 * sizeof(char) );
-		strcpy(type,"char*");
+	size_t curr = ftell(fp);
+	fseek(fp, start, SEEK_SET);
+	char* line = (char*)malloc( N * sizeof(char) );
+	fgets(line,N-1, fp);
 
-	}else if( removeString(src, "_fp") ){
-		type = (char*)malloc( 7 * sizeof(char) );
-		strcpy(type,"float*");
+	removeBefore(line, "(");
+	removeAfterwards(line, ")");
+	removeChars(line, ' ');
 
-	}else if( removeString(src, "_ip") ){
-		type = (char*)malloc( 5 * sizeof(char) );
-		strcpy(type,"int*");
+	NODE* params = getParamLinkedList(line);
 
-	}else if( removeString(src, "_ldp") ){
-		type = (char*)malloc( 13 * sizeof(char) );
-		strcpy(type,"long double*");
-		
-	}else if( removeString(src, "_lp") ){
-		type = (char*)malloc( 6 * sizeof(char) );
-		strcpy(type,"long*");
+	free(line);
+	fseek(fp, curr, SEEK_SET);
+	return params;
+}
 
-	}else if( removeString(src, "_dp") ){
-		type = (char*)malloc( 8 * sizeof(char) );
-		strcpy(type,"double*");
+NODE* getParamLinkedList(char* buffer){
+	char** getParamNameList(char*); // splits params into a list
+	param* getParam(char*);
+	int i;
+	NODE* headOfParams;
 
-	}else if( removeString(src, "_ld") ){
-		type = (char*)malloc( 12 * sizeof(char) );
-		strcpy(type,"long double");
-	
-	}else if( removeString(src, "_c") ){
-		type = (char*)malloc( 5 * sizeof(char) );
-		strcpy(type,"char");
-	
-	}else if( removeString(src, "_f") ){
-		type = (char*)malloc( 6 * sizeof(char) );
-		strcpy(type,"float");
-	
-	}else if( removeString(src, "_i") ){
-		type = (char*)malloc( 4 * sizeof(char) );
-		strcpy(type,"int");
-	
-	}else if( removeString(src, "_l") ){
-		type = (char*)malloc( 5 * sizeof(char) );
-		strcpy(type,"long");
-	
-	}else if( removeString(src, "_d") ){
-		type = (char*)malloc( 7 * sizeof(char) );
-		strcpy(type,"double");
-	
-	}else{
-		error("unknown return type!");
+	char** list = getParamNameList(buffer);
+
+	if( strcmp(list[0], "NULL") != 0 ){
+		headOfParams = paramListFactory( getParam(list[0]) );
 	}
 
-	return type;
-}	
+	for(i = 1; strcmp(list[i], "NULL") != 0 ;i++ ){
+		paramPush(headOfParams, getParam(list[i]));
+	}
+
+	return headOfParams;
+}
 
 
-bool getFuncSpecs(FILE* fp, FUNCTION* func, char[] buffer, size_t startOffset){
+bool getFuncSpecs(FILE* fp, FUNCTION* func, char* buffer, size_t startOffset){
+	char* getFuncName(char*);
+	size_t getEndOffset(FILE*, size_t);
+	char* getFuncRetType(FILE*, size_t, size_t);
+	NODE* getParamList(FILE*, size_t);
+	int getId();
 	
+
 	/* Get Function Specs*/
 	char* funcName = getFuncName(buffer); 						// done
 	size_t endOffset = getEndOffset(fp, startOffset); 			// done
 	char* retType = getFuncRetType(fp, startOffset, endOffset); // done
-	NODE* localVarList = getLocalVarList();
-	NODE* paramList = getParamList();
+//	NODE* localVarList = getLocalVarList(); 					
+	NODE* paramList = getParamList(fp, startOffset); 			// done, test it
 	int id = getId();
 
 	/* Error Controls */
 
 	assert( retType != NULL );
 	assert( funcName != NULL );
-	assert( localVarList != NULL );
+//	assert( localVarList != NULL );
 	assert( paramList != NULL );
 
 	/* Fill the Function */
@@ -236,7 +223,7 @@ bool getFuncSpecs(FILE* fp, FUNCTION* func, char[] buffer, size_t startOffset){
 	func->endOffset = endOffset;
 	func->retType = retType;
 	func->funcName = funcName;
-	func->localVarList = localVarList;
+//	func->localVarList = localVarList;
 	func->paramList = paramList;
 	func->id = id;
 

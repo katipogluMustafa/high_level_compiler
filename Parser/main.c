@@ -1,7 +1,5 @@
 #include"def.h"
 
-
-
 int main(){
 	if( !stackFactory(200) ){
 		error("Unsuccessful Starting of Stack");
@@ -13,20 +11,12 @@ int main(){
 	char tmp;
 	int curr_position;
 
-//	fgets(buffer,N,in);
-//	printf("%s", getFuncName(buffer) );	
-
-	size_t x = ftell(in);
-	size_t pos = getEndOffset(in, x);
-	fseek(in, pos, SEEK_SET);
-
 	fgets(buffer, N-1, in);
-	printf("pos: %lu, string:  %s", pos, buffer);
+	printf("%s", buffer);
 
-	char* type = getFuncRetType(in, x, pos);
+	NODE* params = getParamList(in, ftell(in));
 
-	printf("type: %s", type);
-	
-	
+	paramList(params);
+
 	return 0;
 }
