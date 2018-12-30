@@ -1,0 +1,12 @@
+#include"stdio.h"
+
+
+void main(){
+	printf(“Dizinin eleman sayisini giriniz” )
+	printf(“Dizinin elemanlarini giriniz” )
+}
+}
+}
+	printf(max,maxind)
+}
+}
