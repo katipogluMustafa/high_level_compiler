@@ -1,5 +1,7 @@
 #include"def.h"
 
+
+
 int main(){
 	stackFactory(200);
 	FILE* in = fopen("Files/in.txt","r");
@@ -9,8 +11,8 @@ int main(){
 	char tmp;
 	int curr_position;
 
-	
+	fgets(buffer,N,in);
+	printf("%s", getFuncName(buffer) );	
 
 	return 0;
 }
-

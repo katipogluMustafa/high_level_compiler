@@ -42,7 +42,7 @@ bool getFuncSpecs(FUNCTION* func, char[] buffer, char* ptrToPROC){
 	/* Get Function Specs*/
 
 	char* retType = getFuncRetType();
-	char* funcName = getFuncName();
+	char* funcName = getFuncName(buffer);
 	NODE* localVarList = getLocalVarList();
 	NODE* paramList = getParamList();
 	int id = getId();
@@ -63,4 +63,62 @@ bool getFuncSpecs(FUNCTION* func, char[] buffer, char* ptrToPROC){
 	func->id = id;
 
 	return true;
+}
+
+char* getFuncName(char* buffer){
+
+	char* tempBuffer = malloc( strlen(buffer) * sizeof(char) );
+	strcpy(tempBuffer, buffer);
+
+	removeAfterwards(tempBuffer, "(");
+	removeString(tempBuffer, "PROCEDURE");
+	removeChars(tempBuffer, ' ');
+
+	char* funcName = malloc( ( strlen(buffer) + 1)  * sizeof(char) );
+	strcpy(funcName, tempBuffer);
+
+	free(tempBuffer);
+
+	return funcName;
+}
+
+char* getFuncRetType(char* buffer, char* ptrToPROC){
+	char* getPointerToEndOfFunction(buffer);
+}
+
+char* getPointerToEndOfFunction(FILE* fp, int start){
+	int curr_position = ftell(fp);
+	fseek(fp,start, SEEK_SET );
+
+	char* tempBuffer = malloc( N * sizeof(char) );
+	size_t sp, curr_sp, tempPosition;
+
+	if( !isStackInitialized() ){
+		error("Uninitialized Stack!!");
+	}else{
+		sp = getStackSP();
+	}	
+
+
+	while( !feof(fp) ){
+		tempPosition = ftell(fp);
+		fgets(tempBuffer, N-1, fp);
+		char* p;
+
+		if( ( p = strstr(tempBuffer, "BEGIN") ) != NULL ){
+			push(1);
+		}else if( ( p = strstr(tempBuffer, "END") ) != NULL ){
+			pop();
+		}
+
+		// if true, tempBuffer has END of function
+		if(  ( curr_sp = getStackSP() ) == sp ){
+			
+		}
+
+	}
+
+
+	fseek(fp, curr_position, SEEK_SET);
+	return ptr;
 }

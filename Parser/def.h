@@ -5,6 +5,7 @@
 #include<stdlib.h>
 #include<ctype.h>
 #include<assert.h>
+#include<errno.h>
 
 /* Data Structures */
 
@@ -18,6 +19,9 @@
 #include"lib/arr.h"
 #include"lib/generic.h"
 #include"lib/param.h"
+#include"lib/strRemover.h"
+
+
 /* Macros */
 
 #define BEGIN "{"
@@ -34,3 +38,7 @@ typedef int BOOL;
 
 #define N 100
 
+void error(char* msg){
+	fprintf(stderr, "%s: %s\n", msg, strerror(errno) );
+	exit(1);
+}

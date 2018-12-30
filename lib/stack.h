@@ -35,6 +35,23 @@ struct{
 
 }stack;
 
+size_t getStackSP(){
+	return stack.sp;
+}
+
+size_t getStackMax(){
+	return stack.max;
+}
+
+bool isStackInitialized(){
+
+	if( stack.data == NULL){
+		return true;
+	}
+
+	return false;
+}
+
 bool push(int item){
 	int ret;
 	if(stack.sp == 0){
