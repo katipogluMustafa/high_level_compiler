@@ -53,7 +53,9 @@ void begin_end_converter(CODE* func){
 	for(i = 0; i < lp;i++){
 
 		if( p = strstr(func->data[i], "BEGIN") ){
-			replaceString(p,5,"}",1);
+			replaceString(p,5,"{",1);
+		}else if( p = strstr(func->data[i], "END") ){
+			replaceString(p,5,"}\n",3);
 		}
 
 	}

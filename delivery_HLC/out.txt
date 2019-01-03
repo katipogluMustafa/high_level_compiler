@@ -1,5 +1,5 @@
 PROCEDURE MAIN() 
-} 
+{ 
 	
 	PRINT_LINE “Dizinin eleman sayisini giriniz” 
 	GET_VAL “$n_i” 
@@ -7,21 +7,50 @@ PROCEDURE MAIN()
 	PRINT_LINE “Dizinin elemanlarini giriniz” 
 	
 	FOR k_i <- 0..n_i LOOP 
-	} 
+	{ 
 		GET_VAL “$arr_i[k_i]” 
-	END  
+	}
 	
 	max_i <- 0 
 	maxind_i <- -1 
 	
 	FOR k_i <- 0..n_i LOOP 
-	} 
+	{ 
 		IF (arr_i[k_i] > max_i) THEN 
-		} 
+		{ 
 		max_i <- arr_i[k_i] 
 		maxind_i <- k_i 
-		END 
-	END 
+		}
+	}
 
 	PRINT_LINE “Dizinin en buyuk elemani $max_i, $maxind_i. indiste bulunmaktadir.” 
-END
+}
+
+PROCEDURE MAIN() 
+{ 
+	
+	PRINT_LINE “Dizinin eleman sayisini giriniz” 
+	GET_VAL “$n_i” 
+	
+	PRINT_LINE “Dizinin elemanlarini giriniz” 
+	
+	FOR k_i <- 0..n_i LOOP 
+	{ 
+		GET_VAL “$arr_i[k_i]” 
+	}
+	
+	max_i <- 0 
+	maxind_i <- -1 
+	
+	FOR k_i <- 0..n_i LOOP 
+	{ 
+		IF (arr_i[k_i] > max_i) THEN 
+		{ 
+		max_i <- arr_i[k_i] 
+		maxind_i <- k_i 
+		}
+	}
+
+	PRINT_LINE “Dizinin en buyuk elemani $max_i, $maxind_i. indiste bulunmaktadir.” 
+}
+
