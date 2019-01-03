@@ -11,10 +11,36 @@ int main(){
 	FILE* out = fopen("out.txt","w+");
 
 	CODE* inputCode = getCode(in);
-	printCode(*inputCode);
+//	printCode(*inputCode);
+/*
+	CODE** myFuncs = malloc( sizeof(CODE*) * 3);
+	myFuncs[0] = inputCode;
+	myFuncs[1] = inputCode;
+	myFuncs[2] = NULL;
 
-	CODE* outputCode = codeFactory();  
+	CODE* outputCode = combineFuncs(myFuncs);
+	printCode(*outputCode);
+*/
+	
+//	CODE** functions = getFuncs(inputCode);	
 
+//	CODE* outputCode = combineFuncs(functions)
+/*
+	if ( exportCode(outputCode,out) ){
+		printf("\nSuccessfully Output Code is generated!\n");
+	}else{
+		printf("\nError while exporting code!\n");
+	}
+*/
 	return 0;
 }
 
+
+/*
+ * parameters: High Level Code inside CODE*
+ * return: An Array Of NULL terminated Function Codes as CODE**
+ *
+ */
+CODE** getFuncs(CODE* sourceCode){
+
+}
