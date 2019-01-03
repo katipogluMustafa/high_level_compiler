@@ -54,24 +54,50 @@ int main(){
 }
 
 char* clearString(char* in){
+	char* putStr(char*, int, int, char*);
 	char* buffer = (char*)malloc( sizeof(char) * ( strlen(in) + 1 ) );
 	strcpy(buffer, in);
 	char* out;
 	char* ptr;
 	char* type;
-	char* identifier
+	char* identifier;
+	int start, end;
 	if( ( ptr = strstr(buffer, "$") ) != NULL ){
-		removeBefore(buffer, "_");
-		buffer++;
-		removeAfterwards(buffer,"_");
-		buffer--;
+		start = ptr - buffer;
+		while( (*ptr != ',') && (*ptr != ' ') && (*ptr != '"') ){
+			ptr++;
+		}
+		end = ptr - buffer;
+
 		type = findType(buffer);
 		identifier = getPrintIdentifier(type);
+		//buffer = putStr(buffer, start, end, identifier);
 
 	}
 
 	free(type);
 	return buffer;
+}
+
+char* putStr(char* buffer, int start, int end, char* in){
+	char* newBuffer = malloc( ( strlen(buffer) + strlen(in) + 1 ) * sizeof(char) );
+	int i = 0,k;
+
+	while( i != start){
+		newBuffer[i] = buffer[i];
+		i++;
+	}
+	k = 0;
+	while(in[k] != '\0'){
+		newBuffer[i++] = in[k++];
+	}
+	k = end;
+	while( buffer[k] != '\0' ){
+		newBuffer[i++] = buffer[k++]; 
+	}
+
+	free(buffer);
+	return newBuffer;
 }
 
 char* getPrintIdentifier(char* in){
