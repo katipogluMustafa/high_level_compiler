@@ -23,8 +23,7 @@ int main(){
 
 	CODE* outputCode = combineFuncs(myFuncs);
 	printCode(*outputCode);
-*/
-
+*/		
 	CODE** functions = getFuncs(inputCode);	
 
 	CODE* outputCode = combineFuncs(functions);

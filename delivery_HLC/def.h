@@ -58,16 +58,17 @@ CODE** getFuncs(CODE* sourceCode){
 
 	int funcsPointer = 0;
 	int lp = sourceCode->linePointer;
-	
+	FuncInfo* funcData;
+
 	int i = 0;
-	while( i < lp){
-		FuncInfo* funcData = getFunc(sourceCode, i);
+	while( i < lp ){
+		funcData = getFunc(sourceCode, i);
 
 		CODE* func = getFuncCode(sourceCode, funcData);
 		funcs[funcsPointer] = func;
 		funcsPointer++;
 
-		i = funcData->end;
+		i = funcData->end + 1;
 	}
 
 	return funcs;
@@ -108,15 +109,13 @@ FuncInfo* getFunc(CODE* src, int start){
 		}else if( ( p = strstr(src->data[i], "END") ) != NULL ){
 			pop();
 		}else if( flag == 1 && ( ( curr_sp = getStackSP() ) == sp ) && (i > info->start) ){
-			info->end = i-1;
-			return info;
+			info->end = i + 1;
 		}
 
 	}
 
-	// error
-	if( info ->end == 0){
-		return NULL;
+	if( flag == 1 && ( ( curr_sp = getStackSP() ) == sp ) && (i > info->start) ){
+			info->end = i + 1;
 	}
 
 	return info;
@@ -146,7 +145,7 @@ CODE* getFuncCode(CODE* src, FuncInfo* info){
  * return: no return
  */
 void transferCodeSections(CODE* dest, CODE* src, FuncInfo* info){
-	int destLP = dest->linePointer + 1;
+	int destLP = dest->linePointer;
 	int srcLP = src->linePointer;
 	int i;
 
@@ -158,5 +157,5 @@ void transferCodeSections(CODE* dest, CODE* src, FuncInfo* info){
 		destLP++;
 	}
 
-	dest->linePointer = destLP -1 ;
+	dest->linePointer = destLP;
 }
