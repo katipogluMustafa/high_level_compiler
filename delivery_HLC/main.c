@@ -1,12 +1,15 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include"stack.h"
+#include"codeGenerator.h"
 #include"def.h"
+
+
 
 int main(){
 
 	int i,j;
-
 	FILE* in = fopen("in.txt","r");
 	FILE* out = fopen("out.txt","w+");
 
@@ -21,26 +24,17 @@ int main(){
 	CODE* outputCode = combineFuncs(myFuncs);
 	printCode(*outputCode);
 */
-	
-//	CODE** functions = getFuncs(inputCode);	
 
-//	CODE* outputCode = combineFuncs(functions)
-/*
+	CODE** functions = getFuncs(inputCode);	
+
+	CODE* outputCode = combineFuncs(functions);
+
 	if ( exportCode(outputCode,out) ){
 		printf("\nSuccessfully Output Code is generated!\n");
 	}else{
 		printf("\nError while exporting code!\n");
 	}
-*/
+
 	return 0;
 }
 
-
-/*
- * parameters: High Level Code inside CODE*
- * return: An Array Of NULL terminated Function Codes as CODE**
- *
- */
-CODE** getFuncs(CODE* sourceCode){
-
-}
