@@ -29,6 +29,8 @@ typedef int BOOL;
 
 #endif
 
+#include"strRemover.h"
+
 
 /*
  * Take a Function Code
@@ -37,18 +39,42 @@ typedef int BOOL;
  */
 
 void high_level_to_c_converter(CODE* func){
-	void begin_end_converter(CODE*);
-
-	begin_end_converter(func);
-
+	void func_begin_end_converter(CODE*);
+	void func_call_converter(CODE*);
+	
+	func_begin_end_converter(func);
+	func_call_converter(func);
 }
 
-void begin_end_converter(CODE* func){
+void func_call_converter(CODE* func){
+
+	int lp = func->linePointer;
+	int i,size = 0;
+	char* p,*k;
+
+	for(i = 0; i < lp;i++){
+
+		if( ( p = strstr(func->data[i], "PRINT_LINE") ) != NULL ){
+		//	p += strlen("PRINT_LINE");
+		//k += 1;
+		strReplace(func->data[i],"PRINT_LINE","printf(");
+		
+		removeChars(func->data[i],'\n');
+		strcat(func->data[i], ");\n");
+	}
+
+	}
+
+} 
+
+
+void func_begin_end_converter(CODE* func){
 	void replaceString(char*, int, char*,  int);
 	
 	int lp = func->linePointer;
 	int i;
 	char* p;
+
 
 	for(i = 0; i < lp;i++){
 
@@ -56,6 +82,8 @@ void begin_end_converter(CODE* func){
 			replaceString(p,5,"{",1);
 		}else if( p = strstr(func->data[i], "END") ){
 			replaceString(p,5,"}\n",3);
+		}else if( p = strstr(func->data[i], "PROCEDURE MAIN()") ){
+			replaceString(p,16,"void main()\n",13);
 		}
 
 	}

@@ -1,10 +1,10 @@
-PROCEDURE MAIN() 
+void main()
 { 
 	
-	PRINT_LINE “Dizinin eleman sayisini giriniz” 
+	printf(    “Dizinin eleman sayisini giriniz” );
 	GET_VAL “$n_i” 
 	
-	PRINT_LINE “Dizinin elemanlarini giriniz” 
+	printf(    “Dizinin elemanlarini giriniz” );
 	
 	FOR k_i <- 0..n_i LOOP 
 	{ 
@@ -23,16 +23,16 @@ PROCEDURE MAIN()
 		}
 	}
 
-	PRINT_LINE “Dizinin en buyuk elemani $max_i, $maxind_i. indiste bulunmaktadir.” 
+	printf(    “Dizinin en buyuk elemani $max_i, $maxind_i. indiste bulunmaktadir.” );
 }
 
-PROCEDURE MAIN() 
+void main()
 { 
 	
-	PRINT_LINE “Dizinin eleman sayisini giriniz” 
+	printf(    “Dizinin eleman sayisini giriniz” );
 	GET_VAL “$n_i” 
 	
-	PRINT_LINE “Dizinin elemanlarini giriniz” 
+	printf(    “Dizinin elemanlarini giriniz” );
 	
 	FOR k_i <- 0..n_i LOOP 
 	{ 
@@ -51,6 +51,6 @@ PROCEDURE MAIN()
 		}
 	}
 
-	PRINT_LINE “Dizinin en buyuk elemani $max_i, $maxind_i. indiste bulunmaktadir.” 
+	printf(    “Dizinin en buyuk elemani $max_i, $maxind_i. indiste bulunmaktadir.” );
 }
 
