@@ -1,12 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include"stack.h"
-#include"codeGenerator.h"
-#include"funcs.h"
+
 #include"def.h"
 
-	
+
+
 int main(){
 
 	int i,j;
@@ -22,12 +21,13 @@ int main(){
 	myFuncs[2] = NULL;
 	CODE* outputCode = combineFuncs(myFuncs);
 	printCode(*outputCode);
-*/		 
-   	               
-          
+*/		  
+         	                  
+                
 	CODE** functions = getFuncs(inputCode);	
 	i = 0;
 	while(functions[i] != NULL){
+		var* head = 
 		high_level_to_c_converter(functions[i++]);
 	}
 
@@ -38,7 +38,7 @@ int main(){
 	}else{
 		printf("\nError while exporting code!\n");
 	}
-
+ 
 	return 0;
 }
 
