@@ -2,13 +2,13 @@ void main()
 { 
 	
 	printf(    “Dizinin eleman sayisini giriniz” );
-	GET_VAL “$n_i” 
+	scanf(  “$n_i” );
 	
 	printf(    “Dizinin elemanlarini giriniz” );
 	
 	FOR k_i <- 0..n_i LOOP 
 	{ 
-		GET_VAL “$arr_i[k_i]” 
+		scanf(  “$arr_i[k_i]” );
 	}
 	
 	max_i <- 0 
@@ -30,13 +30,13 @@ void main()
 { 
 	
 	printf(    “Dizinin eleman sayisini giriniz” );
-	GET_VAL “$n_i” 
+	scanf(  “$n_i” );
 	
 	printf(    “Dizinin elemanlarini giriniz” );
 	
 	FOR k_i <- 0..n_i LOOP 
 	{ 
-		GET_VAL “$arr_i[k_i]” 
+		scanf(  “$arr_i[k_i]” );
 	}
 	
 	max_i <- 0 

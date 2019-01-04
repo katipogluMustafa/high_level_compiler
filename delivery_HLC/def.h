@@ -55,13 +55,14 @@ void func_call_converter(CODE* func){
 	for(i = 0; i < lp;i++){
 
 		if( ( p = strstr(func->data[i], "PRINT_LINE") ) != NULL ){
-		//	p += strlen("PRINT_LINE");
-		//k += 1;
-		strReplace(func->data[i],"PRINT_LINE","printf(");
-		
-		removeChars(func->data[i],'\n');
-		strcat(func->data[i], ");\n");
-	}
+			strReplace(func->data[i],"PRINT_LINE","printf(");
+			removeChars(func->data[i],'\n');
+			strcat(func->data[i], ");\n");
+		}else if( ( p = strstr(func->data[i], "GET_VAL") ) != NULL ){
+			strReplace(func->data[i],"GET_VAL","scanf(");
+			removeChars(func->data[i],'\n');
+			strcat(func->data[i], ");\n");
+		}
 
 	}
 
