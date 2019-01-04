@@ -45,7 +45,7 @@ void high_level_to_c_converter(CODE* func, var* funcLocalVarList){
 	void func_begin_end_converter(CODE*);
 	void func_call_converter(CODE*);
 	void control_statement_converter(CODE*);
-	void for_condition_converter(CODE*);
+	void for_condition_converter(CODE*, var*);
 
 	func_begin_end_converter(func);
 	func_call_converter(func);
@@ -63,9 +63,9 @@ void for_condition_converter(CODE* func, var* funcLocalVarList){
 	bool removeBefore(char*, char*);
 
 	int lp = func->linePointer;
-	int i;
-	char *s, *e, *type, *name, *val, *bound;
-	char temp[N];
+	int i,j;
+	char *k, *s, *e, *type, *name, *val, *bound;
+	char* temp = (char*)malloc( sizeof(char) * N);
 
 	for(i = 0; i < lp;i++){
 		if( ( k = strstr(func->data[i], "for(") ) != NULL ){
@@ -79,10 +79,11 @@ void for_condition_converter(CODE* func, var* funcLocalVarList){
 				removeAfterwards(temp, "_");
 				name = (char*)malloc( ( strlen(temp) + 1 ) * sizeof(char) );
 				strcpy(name, temp);
+
 				var* variable = getVar(type, name);
 				varPush(funcLocalVarList, variable);
 
-				e +=2
+				e +=2;
 				strcpy(temp, e);
 				removeAfterwards(temp, "..");
 				removeChars(temp,' ');
@@ -112,7 +113,7 @@ void for_condition_converter(CODE* func, var* funcLocalVarList){
 					strcat(temp, name);
 					strcat(temp, "++){");
 
-					strcpy(func->data[i], temp);
+					//strcpy(func->data[i], temp);
 
 				}else{
 					printf("\nMissing .. inside for loop!\n");

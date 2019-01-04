@@ -14,6 +14,13 @@ NODE* varPushFront(var*, var*);
 bool varDeleteNode(var*, var*);
 NODE* varSearchNode(var*, var*);
 
+char* getName( var* variable ){
+	return variable->name;
+}
+
+char* getType( var* variable ){
+	return variable->type;
+}
 
 bool isVarAddedBefore(var* head, var* item){
 	
@@ -29,11 +36,11 @@ bool isVarAddedBefore(var* head, var* item){
 var* getVar(char* name, char* type){
 	var* variable = (var*)malloc( sizeof(var) );
 	
-	var->name = malloc( ( strlen(name) + 1) * sizeof(char) );
-	strcpy(var->name, name);
+	variable->name = malloc( ( strlen(name) + 1) * sizeof(char) );
+	strcpy(variable->name, name);
 	
-	var->type = malloc( ( strlen(type) + 1) * sizeof(char) );
-	strcpy(var->type, type);
+	variable->type = malloc( ( strlen(type) + 1) * sizeof(char) );
+	strcpy(variable->type, type);
 	
 	return variable;
 }
@@ -48,7 +55,7 @@ bool varEqualTo(var x, var y){
 }
 
 void varPrintf(var* x){
-	printf("name: %s\ttype: %s\tid:   %d\n", x->name, x->type, x->id);
+	printf("name: %s\ttype: %s\n", getName(x), getType(x) );
 }
 
 NODE* varListFactory(var* val){
@@ -57,7 +64,7 @@ NODE* varListFactory(var* val){
 
 void varPush(var* head, var* val) {
 	if( head == NULL ){
-		head = varListFactory(val);
+		head = (var*)varListFactory(val);
 	}else if( !isVarAddedBefore(head,val) ){
 		genericPush((void*)head, (void*)val);
 	}

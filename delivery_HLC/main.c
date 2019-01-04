@@ -3,8 +3,6 @@
 #include<string.h>
 #include"def.h"
 
-#define concat(a,b) (a##b)
-#define head(a)("head"##a)
 
 int main(){
 
@@ -21,14 +19,14 @@ int main(){
 	myFuncs[2] = NULL;
 	CODE* outputCode = combineFuncs(myFuncs);
 	printCode(*outputCode);
-*/		  
-          	                  
+*/	 	   
+            	                  
                 
 	CODE** functions = getFuncs(inputCode);	
 	i = 0;
 	while(functions[i] != NULL){
-		concat("var* head", i); 	// send local var list
-		high_level_to_c_converter(functions[i++],  head(i));
+		var* head;
+		high_level_to_c_converter(functions[i++],  head);
 	}
 
 	CODE* outputCode = combineFuncs(functions);
