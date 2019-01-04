@@ -2,11 +2,10 @@
 
 typedef struct variable{
 	char* name; 
-	char* type;  // type
-	int id; 		// id in variables table;
+	char* type;
 }var;
 
-
+var* getVar(char*, char*);
 void varPrintf(var*);
 NODE* varListFactory(var*);
 void varPush(var*, var*);
@@ -14,6 +13,7 @@ void varList(var*);
 NODE* varPushFront(var*, var*);
 bool varDeleteNode(var*, var*);
 NODE* varSearchNode(var*, var*);
+
 
 bool isVarAddedBefore(var* head, var* item){
 	
@@ -24,6 +24,18 @@ bool isVarAddedBefore(var* head, var* item){
 	}
 
 	return true;
+}
+
+var* getVar(char* name, char* type){
+	var* variable = (var*)malloc( sizeof(var) );
+	
+	var->name = malloc( ( strlen(name) + 1) * sizeof(char) );
+	strcpy(var->name, name);
+	
+	var->type = malloc( ( strlen(type) + 1) * sizeof(char) );
+	strcpy(var->type, type);
+	
+	return variable;
 }
 
 bool varEqualTo(var x, var y){
@@ -44,7 +56,11 @@ NODE* varListFactory(var* val){
 }
 
 void varPush(var* head, var* val) {
-	genericPush((void*)head, (void*)val);
+	if( head == NULL ){
+		head = varListFactory(val);
+	}else if( !isVarAddedBefore(head,val) ){
+		genericPush((void*)head, (void*)val);
+	}
 }
 
 void varList(var* head){

@@ -1,10 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-
 #include"def.h"
 
-
+#define concat(a,b) (a##b)
+#define head(a)("head"##a)
 
 int main(){
 
@@ -22,13 +22,13 @@ int main(){
 	CODE* outputCode = combineFuncs(myFuncs);
 	printCode(*outputCode);
 */		  
-         	                  
+          	                  
                 
 	CODE** functions = getFuncs(inputCode);	
 	i = 0;
 	while(functions[i] != NULL){
-		var* head = 
-		high_level_to_c_converter(functions[i++]);
+		concat("var* head", i); 	// send local var list
+		high_level_to_c_converter(functions[i++],  head(i));
 	}
 
 	CODE* outputCode = combineFuncs(functions);

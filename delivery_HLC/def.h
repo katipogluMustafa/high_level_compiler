@@ -41,7 +41,7 @@ typedef int BOOL;
  * converts to c code
  */
 
-void high_level_to_c_converter(CODE* func){
+void high_level_to_c_converter(CODE* func, var* funcLocalVarList){
 	void func_begin_end_converter(CODE*);
 	void func_call_converter(CODE*);
 	void control_statement_converter(CODE*);
@@ -50,30 +50,75 @@ void high_level_to_c_converter(CODE* func){
 	func_begin_end_converter(func);
 	func_call_converter(func);
 	control_statement_converter(func);
-	for_condition_converter(func);
+	for_condition_converter(func,funcLocalVarList);
 
 }
-void for_condition_converter(CODE* func){
+
+void for_condition_converter(CODE* func, var* funcLocalVarList){
 	bool removeString(char*, char*);
 	void removeChars(char*, char);
 	char* findType(char*);
+	var* getVar(char*, char*);
+	void varPush(var*, var*);
+	bool removeBefore(char*, char*);
 
 	int lp = func->linePointer;
 	int i;
-	char *s, *e, *type, *name;
+	char *s, *e, *type, *name, *val, *bound;
 	char temp[N];
 
 	for(i = 0; i < lp;i++){
-		if( ( s = strstr(func->data[i], "for(") ) != NULL ){
+		if( ( k = strstr(func->data[i], "for(") ) != NULL ){
 			if( ( e = strstr(func->data[i], "<-") ) != NULL ){
-				s += 4;
-				strcpy(temp, s);
+				k += 4;
+				strcpy(temp, k);
 				removeString(temp,e);
 				removeChars(temp,' ');
+
 				type = findType(temp);
 				removeAfterwards(temp, "_");
-				name = malloc( ( strlen(temp) + 1 ) * sizeof(char) );
-				strcpy(name,temp);
+				name = (char*)malloc( ( strlen(temp) + 1 ) * sizeof(char) );
+				strcpy(name, temp);
+				var* variable = getVar(type, name);
+				varPush(funcLocalVarList, variable);
+
+				e +=2
+				strcpy(temp, e);
+				removeAfterwards(temp, "..");
+				removeChars(temp,' ');
+				val = (char*)malloc( ( strlen(temp) + 1 ) * sizeof(char) );
+				strcpy(val, temp);
+
+				if( ( s = strstr(e, "..") ) != NULL ){
+					strcpy(temp, s);
+					removeAfterwards(temp, ")");
+					removeBefore(temp, "..");
+					temp += 2;
+					bound = (char*)malloc( ( strlen(temp) + 1 ) * sizeof(char) );
+					strcpy(bound, temp);
+					
+
+					k -= 4;
+					strcpy(temp, k);
+					removeAfterwards(temp, "(");
+					strcat(temp, name);
+					strcat(temp," = ");
+					strcat(temp, val);
+					strcat(temp,"; ");
+					strcat(temp, name);
+					strcat(temp, " <= ");
+					strcat(temp, bound);
+					strcat(temp, "; ");
+					strcat(temp, name);
+					strcat(temp, "++){");
+
+					strcpy(func->data[i], temp);
+
+				}else{
+					printf("\nMissing .. inside for loop!\n");
+				}
+
+
 			}		
 		}
 	}
